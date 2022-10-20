@@ -9,6 +9,7 @@
 void send_string(int c, const char* str) {
 	while(*str)
 		send(c, str++, 1, 0);
+	send(c, str, 1, 0);
 }
 
 char* recv_string(int c) {
@@ -45,13 +46,10 @@ int main(int argc, char** argv) {
 	if(connect(c, (struct sockaddr*)&server, sizeof(server))<0) {
 		printf("Eroare la conectare server\n");
 		return 1;
-	}
-	
-	printf("Message : ");
-	char str[100];
-	gets(str);
-	printf("Here");
-	printf("Send text: ");
+	}	
+		
+	char* str = "Ana are mere\0";
+	printf("%s\n",str);	
 	send_string(c,str);
 	
 	int result = recv_int(c);

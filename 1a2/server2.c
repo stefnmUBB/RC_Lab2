@@ -31,16 +31,23 @@ int main(){
     memset(&client, 0, sizeof(client));
     
     int nr_spatii=0;
-    int c = accept(s, (struct sockaddr *) &client, &l);
-    printf("S-a conectat clientul.\n");
-    char caracter = ' ';
-    while(caracter != '\0'){
-        recv(c, &caracter, sizeof(caracter), MSG_WAITALL);
-        if(caracter == ' ')
-            nr_spatii++;
-    }
-    nr_spatii = ntohs(nr_spatii);
-    send(c, &nr_spatii, sizeof(nr_spatii), 0);
-    close(s);
+	while(1)
+	{		
+		int c = accept(s, (struct sockaddr *) &client, &l);
+		printf("S-a conectat clientul.\n");
+		nr_spatii=0;
+		char caracter = ' ';
+		while(caracter != '\0'){
+			recv(c, &caracter, sizeof(caracter), MSG_WAITALL);
+			printf("%c", caracter);
+			if(caracter == ' ')
+				nr_spatii++;
+		}
+		printf("NRSPATII = %i\n",nr_spatii);
+		nr_spatii = ntohs(nr_spatii);
+		send(c, &nr_spatii, sizeof(nr_spatii), 0);
+		close(c);
+	}
+	close(s);
 }
  
