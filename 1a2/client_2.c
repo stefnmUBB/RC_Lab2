@@ -37,18 +37,20 @@ int main(int argc, char** argv) {
 		return 1;
 	}
 	
-	memset(&server, 0, sizeof(server));
-	server.sin_port = 1234;
-	server.sin_addr.s_addr = inet_addr("172.30.113.16");
-	server.sin_family = AF_INET;		
+	 memset(&server, 0, sizeof(server));
+	 server.sin_port = htons(1234);
+	 server.sin_family = AF_INET;
+	 server.sin_addr.s_addr = inet_addr("127.0.0.1");
 	
-	if(connect(c, (struct sockaddr*)&server, sizeof(server)<0)) {
+	if(connect(c, (struct sockaddr*)&server, sizeof(server))<0) {
 		printf("Eroare la conectare server\n");
 		return 1;
 	}
 	
+	printf("Message : ");
 	char str[100];
 	gets(str);
+	printf("Here");
 	printf("Send text: ");
 	send_string(c,str);
 	
